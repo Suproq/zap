@@ -1,0 +1,28 @@
+name: Deploy
+
+on:
+    push:
+        tags:
+            - "*.*.*"
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        timeout-minutes: 30
+        steps:
+            -   run: ls -la
+            -   uses: actions/checkout@master
+
+            -   run: sudo apt-get install rsync
+           
+            -   name: Deploy theme on server
+                id: deploy_theme
+                uses: Pendect/action-rsyncer@v1.1.0
+                env:
+                    DEPLOY_KEY: ${{secrets.DEPLOY_KEY}}
+                with:
+                    flags: '-avc --delete'
+                    src: 'dist/'
+                    dest: 'root@"${{secrets.SERVER_IP}}":/path/on/remote'
+
+            -   name: Display status from deploy
+                run: echo "${{ steps.deploy.outputs.status }}"
