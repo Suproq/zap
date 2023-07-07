@@ -20,6 +20,7 @@ class AuthStore {
             nickname: nickname, password: password, phone: phone,role:role,name:name,surname:surname,address:address,darktheme:darktheme
           };
         const response = await fetch('http://localhost:8080/api/auth/register', {
+            mode: 'no-cors',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json;charset=utf-8'

@@ -9,7 +9,8 @@ class LoginStore {
             thisUser: observable,
             thisUserLoggedIn: observable,
             jwtDecode: observable,
-            getNick: observable
+            getNick: observable,
+            getRole: observable
         })
         this.thisUser = thisUser
     }
@@ -36,6 +37,11 @@ class LoginStore {
     getNick(){
         console.log(this.users());
         return this.users().nickname;
+    }
+    getRole(){
+        if(this.isLogged())
+            return this.users().role;
+        return 0;
     }
     isLogged(){
         const log = localStorage.getItem('loggedIn');

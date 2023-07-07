@@ -7,19 +7,21 @@ import Button from '@mui/material/Button';
 import { Container } from "@mui/system";
 import SearchBar from "./SearchBar";
 import { Link, Navigate } from 'react-router-dom';
-import LoginForm from "./LoginForm";
+import LoginForm from "./forms/LoginForm";
 import { useNavigate } from 'react-router-dom';
 import { SignalCellularNullOutlined } from "@mui/icons-material";
-import { IconButton, Badge } from "@mui/material";
+import { IconButton, Badge, formControlClasses } from "@mui/material";
 import MailIcon from '@mui/icons-material/Mail';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { Menu } from "@mui/material";
 import { MenuItem } from "@mui/material";
 import login from '../stores/LoginStore';
+import ROLES from '../stores/constants/Roles';
 
 const windowInnerWidth = document.documentElement.clientWidth;
 const minWidth = 1200;
 const logged = login.isLogged();
+const isadmin = login.getRole() === ROLES.ADMIN;
 
 
 function NonLog() {
@@ -58,8 +60,9 @@ function NonLog() {
 }
 
 function Logged() {
+  console.log('1', ROLES.ADMIN);
   const nickname = login.getNick();
-  //console.log()
+  const navigate = useNavigate();
   //const nickname = '1';
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleProfileMenuOpen = (event) => {
@@ -72,6 +75,10 @@ function Logged() {
   const handleLogout = () => {
     login.logout();
     window.location.reload();
+  }
+  const toAdmin = () => {
+    navigate('/admin');
+    handleMenuClose();
   }
   const isMenuOpen = Boolean(anchorEl);
   const menuId = 'primary-search-account-menu';
@@ -92,6 +99,7 @@ function Logged() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>{nickname}</MenuItem>
+      {isadmin && <MenuItem onClick={toAdmin}>Админ-панель</MenuItem>}
       <MenuItem onClick={handleLogout}>Выйти</MenuItem>
     </Menu>
   );
