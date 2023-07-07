@@ -4,7 +4,7 @@ import LoginForm from './components/forms/LoginForm';
 import AdminPanel from './components/forms/AdminPanel';
 import NewCar from './components/forms/AdminForms/NewCar';
 //import Main from './components/Main';
-import { lightTheme, darkTheme } from './themes';
+import { /*lightTheme,*/ darkTheme } from './themes';
 import { ThemeProvider } from '@emotion/react';
 import { Route, Routes } from 'react-router-dom'
 import Home from './components/Home';
